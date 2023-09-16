@@ -1,1 +1,2 @@
 bentoml models list
+bentoml serve service.py:svc --reload

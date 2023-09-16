@@ -1,0 +1,14 @@
+#This file is responsible to create api and also help you to create swagger ui.
+#If you run this file then it will export the classifier via api as UI. 
+
+import numpy as np
+import bentoml
+from bentoml.io import NumpyNdarray
+
+iris_clf_runner=bentoml.sklearn.get("iris_clf:latest").to_runner()
+svc=bentoml.Service("iris_classifier",runners=[iris_clf_runner])
+
+@svc.api(input=NumpyNdarray(),output=NumpyNdarray())
+def classify(input_series:np.ndarray) -> np.ndarray:
+    result=iris_clf_runner.predict.run(input_series)
+    return result
